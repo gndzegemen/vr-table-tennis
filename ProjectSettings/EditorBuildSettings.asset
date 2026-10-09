@@ -5,13 +5,11 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/TableTennisVR/Scenes/WaitingRoom.unity
-    guid: 65f956d9e6496614d89c1e790387c8fb
   - enabled: 1
-    path: Assets/TableTennisVR/Scenes/MainScene.unity
-    guid: 06a591413da78ab41bdf7bf18ee524b0
+    path: Assets/TableTennis/Scenes/TableTennis.unity
+    guid: d131f82fda6f57a45b2debd3c3ebbeaa
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 403f246e72f335e44b6f23ce3a27ba6f, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 69c724b9a1c7e454d8e2efb821d517ed, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 0079251f8ff97954d8cd71cd56830837, type: 2}
+  m_UseUCBPForAssetBundles: 0

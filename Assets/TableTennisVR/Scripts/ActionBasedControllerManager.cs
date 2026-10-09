@@ -240,12 +240,12 @@ public class ActionBasedControllerManager : MonoBehaviour
 
     // Components of the controller to switch on and off for different states
     XRBaseController m_BaseController;
-    XRBaseInteractor m_BaseInteractor;
-    XRInteractorLineVisual m_BaseLineVisual;
+    UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor m_BaseInteractor;
+    UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual m_BaseLineVisual;
 
     XRBaseController m_TeleportController;
-    XRBaseInteractor m_TeleportInteractor;
-    XRInteractorLineVisual m_TeleportLineVisual;
+    UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor m_TeleportInteractor;
+    UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual m_TeleportLineVisual;
 
     protected void OnEnable()
     {
@@ -339,17 +339,17 @@ public class ActionBasedControllerManager : MonoBehaviour
 
         if (m_BaseInteractor == null)
         {
-            m_BaseInteractor = m_BaseControllerGameObject.GetComponent<XRBaseInteractor>();
+            m_BaseInteractor = m_BaseControllerGameObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor>();
             if (m_BaseInteractor == null)
-                Debug.LogWarning($"Cannot find any {nameof(XRBaseInteractor)} component on the Base Controller GameObject.", this);
+                Debug.LogWarning($"Cannot find any {nameof(UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor)} component on the Base Controller GameObject.", this);
         }
 
         // Only check the line visual component for RayInteractor, since DirectInteractor does not use the line visual component
-        if (m_BaseInteractor is XRRayInteractor && m_BaseLineVisual == null)
+        if (m_BaseInteractor is UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor && m_BaseLineVisual == null)
         {
-            m_BaseLineVisual = m_BaseControllerGameObject.GetComponent<XRInteractorLineVisual>();
+            m_BaseLineVisual = m_BaseControllerGameObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
             if (m_BaseLineVisual == null)
-                Debug.LogWarning($"Cannot find any {nameof(XRInteractorLineVisual)} component on the Base Controller GameObject.", this);
+                Debug.LogWarning($"Cannot find any {nameof(UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual)} component on the Base Controller GameObject.", this);
         }
     }
 
@@ -370,16 +370,16 @@ public class ActionBasedControllerManager : MonoBehaviour
 
         if (m_TeleportLineVisual == null)
         {
-            m_TeleportLineVisual = m_TeleportControllerGameObject.GetComponent<XRInteractorLineVisual>();
+            m_TeleportLineVisual = m_TeleportControllerGameObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual>();
             if (m_TeleportLineVisual == null)
-                Debug.LogWarning($"Cannot find {nameof(XRInteractorLineVisual)} component on the Teleport Controller GameObject.", this);
+                Debug.LogWarning($"Cannot find {nameof(UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals.XRInteractorLineVisual)} component on the Teleport Controller GameObject.", this);
         }
 
         if (m_TeleportInteractor == null)
         {
-            m_TeleportInteractor = m_TeleportControllerGameObject.GetComponent<XRRayInteractor>();
+            m_TeleportInteractor = m_TeleportControllerGameObject.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>();
             if (m_TeleportInteractor == null)
-                Debug.LogWarning($"Cannot find {nameof(XRRayInteractor)} component on the Teleport Controller GameObject.", this);
+                Debug.LogWarning($"Cannot find {nameof(UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor)} component on the Teleport Controller GameObject.", this);
         }
     }
 
@@ -397,7 +397,7 @@ public class ActionBasedControllerManager : MonoBehaviour
         if (m_BaseInteractor != null)
             m_BaseInteractor.enabled = enable;
 
-        if (m_BaseInteractor is XRRayInteractor && m_BaseLineVisual != null)
+        if (m_BaseInteractor is UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor && m_BaseLineVisual != null)
             m_BaseLineVisual.enabled = enable;
     }
 
@@ -516,7 +516,7 @@ public class ActionBasedControllerManager : MonoBehaviour
         // Transition from Select state to Interact state when the interactor has a selectTarget
         FindBaseControllerComponents();
 
-        if (m_BaseInteractor.selectTarget != null)
+        if (m_BaseInteractor.hasSelection)
             TransitionState(m_SelectState, m_InteractState);
     }
 
@@ -540,7 +540,7 @@ public class ActionBasedControllerManager : MonoBehaviour
     void OnUpdateInteractState()
     {
         // Transition from Interact state to Select state when the base interactor no longer has a select target
-        if (m_BaseInteractor.selectTarget == null)
+        if (!m_BaseInteractor.hasSelection)
             TransitionState(m_InteractState, m_SelectState);
     }
 
